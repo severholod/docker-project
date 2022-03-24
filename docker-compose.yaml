@@ -2,7 +2,7 @@ version: "3"
 
 services:
   web:
-    container_name: expresstest
+    container_name: dt_express
     build: .
     command: npm start
     volumes:
@@ -10,3 +10,12 @@ services:
       - /app/node_modules
     ports:
       - "3000:3000"
+
+  mongo:
+    container_name: dt_mongo
+    image: mongo:4.4.13-focal
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - "27017:27017"

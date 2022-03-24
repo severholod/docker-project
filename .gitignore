@@ -11,6 +11,7 @@ Thumbs.db
 
 # Logs
 npm-debug.log
+express.log
 
 # Block build
 /dist
