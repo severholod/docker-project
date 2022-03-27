@@ -13,7 +13,7 @@ services:
 
   mongo:
     container_name: dt_mongo
-    image: mongo:4.4.13-focal
+    image: mongo:5.0-focal
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
