@@ -1,34 +1,22 @@
 const express = require('express')
-const { MongoClient } = require('mongodb')
+const bodyParser = require('body-parser')
+
+const db = require('./db')
+const router = require('./router')
+
 const app = express()
 const PORT = 3000
-const URL = 'mongodb://mongo:27017'
 
-const client = new MongoClient(URL)
-const run = async () => {
-  try {
-    await client.connect()
-    const db = client.db('root')
-    const collection = db.collection('users')
-    const user = {firstName: 'Tom', lastName: 'House', age: '42', position: 'manager'}
-    const res = await collection.insertOne(user)
-    return res
-  } catch (e) {
-    console.error(e)
-  } finally {
-    await client.close()
-  }
-}
 
-app.get('/', async (req, res) => {
-  const response = await run()
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
-  console.log(response)
-  res.send('Hello World!23!!')
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
 })
 
+app.use('/api', router)
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`)
-})
-
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
